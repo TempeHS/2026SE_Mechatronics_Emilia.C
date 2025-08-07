@@ -14,11 +14,13 @@ of a set_duty(x) call are:
 """
 
 import time
-from machine import Pin, PWM
 from servo import Servo
+from machine import Pin, PWM
+
 
 # create a PWM servo controller (16 - pin Pico)
-servo_pwm = PWM(Pin(16))
+servo_pwm = PWM(Pin())
+servo_pwm2 = PWM(Pin())
 
 # Set the parameters of the servo pulses, more details in the "Documentation" section
 freq = 50
@@ -28,17 +30,30 @@ dead_zone_us = 1500
 
 # create a servo object
 my_servo = Servo(pwm=servo_pwm)
+my_servo2 = Servo(pwm=servo_pwm2)
+
+my_servo = Servo(
+    pwm=servo_pwm, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq
+)
+
+my_servo2 = Servo(
+    pwm=servo_pwm2, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq
+)
 
 while True:
     # manually set the servo duty time
     my_servo.set_duty(500)
+    my_servo2.set_duty(2500)
     time.sleep(2)
 
     my_servo.set_duty(1500)
+    my_servo2.set_duty(1500)
     time.sleep(2)
 
     my_servo.set_duty(2500)
+    my_servo2.set_duty(500)
     time.sleep(2)
 
     my_servo.stop()
+    my_servo2.stop()
     time.sleep(2)

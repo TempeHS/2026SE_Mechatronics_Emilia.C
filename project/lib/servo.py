@@ -1,6 +1,5 @@
 from machine import PWM
 
-
 class Servo:
     """Servo class for pulse density modulation servos"""
 
