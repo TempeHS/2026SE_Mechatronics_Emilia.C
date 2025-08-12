@@ -19,7 +19,9 @@ from machine import Pin, PWM
 
 
 # create a PWM servo controller (16 - pin Pico)
+# Right wheel
 servo_pwm = PWM(Pin(18))
+# Left wheel
 servo_pwm2 = PWM(Pin(20))
 
 # Set the parameters of the servo pulses, more details in the "Documentation" section
@@ -40,16 +42,29 @@ my_servo2 = Servo(
 
 while True:
     # manually set the servo duty time
+
+#forwards
     my_servo.set_duty(500)
     my_servo2.set_duty(2500)
     time.sleep(2)
 
+#stops
     my_servo.set_duty(1500)
     my_servo2.set_duty(1500)
     time.sleep(2)
 
-    my_servo.set_duty(2500)
-    my_servo2.set_duty(500)
+# turns
+    my_servo.set_duty(1400)
+    my_servo2.set_duty(1500)
+    time.sleep(2)
+
+#forwards
+    my_servo.set_duty(1400)
+    my_servo2.set_duty(1600)
+    time.sleep(2)
+
+    my_servo.set_duty(1200)
+    my_servo2.set_duty(1800)
     time.sleep(2)
 
     my_servo.stop()

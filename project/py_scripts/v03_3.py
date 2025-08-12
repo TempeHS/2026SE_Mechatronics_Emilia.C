@@ -40,14 +40,22 @@ my_servo2 = Servo(
 
 while True:
     # manually set the servo duty time
+    #forwards
     my_servo.set_duty(500)
     my_servo2.set_duty(2500)
     time.sleep(2)
 
+#stops
     my_servo.set_duty(1500)
     my_servo2.set_duty(1500)
     time.sleep(2)
 
+#spins
+    my_servo.set_duty(500)
+    my_servo2.set_duty(500)
+    time.sleep(2)
+
+# backwards
     my_servo.set_duty(2500)
     my_servo2.set_duty(500)
     time.sleep(2)
