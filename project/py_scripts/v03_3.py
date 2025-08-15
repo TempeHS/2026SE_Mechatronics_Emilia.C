@@ -13,7 +13,7 @@ of a set_duty(x) call are:
 
 """
 
-import time
+from machine import Pin
 from servo import Servo
 from machine import Pin, PWM
 
