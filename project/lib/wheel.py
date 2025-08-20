@@ -1,5 +1,6 @@
-from machine import Pin, PWM
 import time
+from servo import Servo
+from machine import Pin, PWM
 
 class Wheel:
     def __init__(self, pinleft, pinright, debug=False):
