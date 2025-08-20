@@ -46,14 +46,14 @@ def forward():
     time.sleep(2)
 
 def left():
-    my_servo.set_duty(1150)
+    my_servo.set_duty(1300)
     my_servo2.set_duty(1500)
-    time.sleep(2)
+    time.sleep(2.85)
 
 def right():
     my_servo.set_duty(1500)
-    my_servo2.set_duty(1650)
-    time.sleep(2)
+    my_servo2.set_duty(1700)
+    time.sleep(2.25)
 
 def backward():
     my_servo.set_duty(2500)
@@ -73,8 +73,7 @@ def stop():
 
 forward()
 left()
-pause()
 right()
-forward()
+right()
 backward()
 stop()
