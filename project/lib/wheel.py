@@ -4,8 +4,24 @@ from machine import Pin, PWM
 
 class Wheel:
     def __init__(self, pinleft, pinright):
-        self.left_servo = Servo(PWM(Pin(pinleft)))
-        self.right_servo = Servo(PWM(Pin(pinright)))
+        freq = 50
+        min_us = 500
+        max_us = 2500
+        dead_zone_us = 1500
+        self.left_servo = Servo(
+            PWM(Pin(pinleft)),
+            min_us=min_us,
+            max_us=max_us,
+            dead_zone_us=dead_zone_us,
+            freq=freq
+        )
+        self.right_servo = Servo(
+            PWM(Pin(pinright)),
+            min_us=min_us,
+            max_us=max_us,
+            dead_zone_us=dead_zone_us,
+            freq=freq
+        )
 
     def left(self, duration=2.85):
         self.right_servo.set_duty(1300)
