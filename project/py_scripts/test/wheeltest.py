@@ -1,5 +1,5 @@
 import time
-from servo import Servo
+from wheel import Wheel
 from machine import Pin, PWM
 
 
@@ -11,11 +11,11 @@ min_us = 500
 max_us = 2500
 dead_zone_us = 1500
 
-pinRight = Servo(
+pinRight = Wheel(
     pwm=pinR, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq
 )
 
-pinLeft = Servo(
+pinLeft = Wheel(
     pwm=pinL, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq
 )
 
