@@ -4,7 +4,7 @@ from machine import Pin
 
 
 # File name of the script to import
-file_name = "v03_4.py"
+file_name = "ultrasonictest.py"
 
 # Add the path to the sys.path
 sys.path.append("/py_scripts")

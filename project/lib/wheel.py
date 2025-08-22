@@ -1,54 +1,36 @@
-import time
-from servo import Servo
-from machine import Pin, PWM
+from machine import PWM
 
 class Wheel:
-    def __init__(self, pinleft, pinright):
-        freq = 50
-        min_us = 500
-        max_us = 2500
-        dead_zone_us = 1500
-        self.left_servo = Servo(
-            PWM(Pin(pinleft)),
-            min_us=min_us,
-            max_us=max_us,
-            dead_zone_us=dead_zone_us,
-            freq=freq
-        )
-        self.right_servo = Servo(
-            PWM(Pin(pinright)),
-            min_us=min_us,
-            max_us=max_us,
-            dead_zone_us=dead_zone_us,
-            freq=freq
-        )
+    def __init__(
+        self,
+        pwm: PWM,
+        min_us=500,
+        max_us=2500,
+        dead_zone_us=1500,
+        freq=50,
+    ):
+        self.pwm = pwm
+        self.pwm.freq(freq)
+        self._move_period_ms = 1000 // freq
+        min_us = min_us if min_us > 0 else 0
+        max_us = max_us if min_us < max_us < (1000 // freq) * 1000 else 0
+        self._curr_duty = 0
+        self.dead_zone_us = dead_zone_us
 
-    def left(self, duration=2.85):
-        self.right_servo.set_duty(1300)
-        self.left_servo.set_duty(1500)
-        time.sleep(duration)
+    def set_duty(self, duty_us: int):
+        self._curr_duty = duty_us
+        self.pwm.duty_ns(duty_us * 1000)
 
-    def right(self, duration=2.25):
-        self.right_servo.set_duty(1500)
-        self.left_servo.set_duty(1700)
-        time.sleep(duration)
+    def set_angle(self, angle: int):
+        angle = min(max(angle, 0), 180)
+        duty_us = int(500 + (angle / 180) * 2000)
+        self.set_duty(duty_us)
 
-    def forward(self, duration=2):
-        self.right_servo.set_duty(500)
-        self.left_servo.set_duty(2500)
-        time.sleep(duration)
-
-    def backward(self, duration=2):
-        self.right_servo.set_duty(2500)
-        self.left_servo.set_duty(500)
-        time.sleep(duration)
-
-    def pause(self, duration=2):
-        self.right_servo.set_duty(1500)
-        self.left_servo.set_duty(1500)
-        time.sleep(duration)
+    def get_duty(self) -> int:
+        return self._curr_duty
 
     def stop(self):
-        self.right_servo.stop()
-        self.left_servo.stop()
-        time.sleep(2)
+        self.set_duty(self.dead_zone_us)
+
+    def deinit(self):
+        self.pwm.deinit()
